@@ -1,23 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rollouts-demo
-  namespace: default
+  name: argocd-rollouts-demo
 spec:
-  project: default
-
-  source:
-    repoURL: https://github.com/raphaelg-cit/rollouts-demo.git
-    targetRevision: HEAD
-    path: canary
-  destination: 
-    server: https://kubernetes.default.svc
+  destination:
+    name: ''
     namespace: default
-
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: canary
+    repoURL: 'https://github.com/raphaelg-cit/rollouts-demo.git'
+    targetRevision: HEAD
+  project: default
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
